@@ -26,16 +26,16 @@ Apache License 2.0 (see [LICENSE](LICENSE))
 ### Option 1: Secure Approach (Source Code)
 *Recommended for environments meeting government and commercial cybersecurity requirements.*
 
-1.  **Scan:** Analyze the provided `.cpp` file using your preferred source code scanners to verify security.
-2.  **Build:** Compile the source code into a DLL using your preferred builder.
-3.  **Install:**
-    * Ensure Notepad++ is completely closed.
-    * Navigate to `C:\Program Files\Notepad++\plugins`.
-    * Create a new folder named `AutoDaveSave`.
-    * Place your newly compiled `.dll` file inside this folder.
+* **Scan:** Analyze the provided `.cpp` file using your preferred source code scanners to verify security.
+* **Build:** Compile the source code into a DLL using your preferred builder.
+* **Install:**
+    1.  Ensure Notepad++ is completely closed.
+    2.  Navigate to `C:\Program Files\Notepad++\plugins`.
+    3.  Create a new folder named `AutoDaveSave`.
+    4.  Place your newly compiled `.dll` file inside this folder.
 
 ### Option 2: Standard Approach (Pre-built DLL)
-1.  Ensure Notepad++ is completely closed.
-2.  Navigate to `C:\Program Files\Notepad++\plugins`.
-3.  Create a new folder named `AutoDaveSave`.
-4.  Place the provided `.dll` file inside this folder.
+* Ensure Notepad++ is completely closed.
+* Navigate to `C:\Program Files\Notepad++\plugins`.
+* Create a new folder named `AutoDaveSave`.
+* Place the provided `.dll` file inside this folder.
