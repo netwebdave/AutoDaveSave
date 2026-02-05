@@ -24,7 +24,7 @@ Apache License 2.0 (see [LICENSE](LICENSE))
 ## Installation
 
 ### Option 1: Secure Approach (Source Code)
-*Recommended for environments meeting government and commercial cybersecurity requirements.*
+*Recommended for secure environments such as power user, government, and commercial.*
 
 * **Scan:** Analyze the provided `.cpp` file using your preferred source code scanners to verify security.
 * **Build:** Compile the source code into a DLL using your preferred builder.
