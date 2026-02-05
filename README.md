@@ -31,3 +31,5 @@ Apache License 2.0 (see [LICENSE](LICENSE))
     2.  Navigate to `C:\Program Files\Notepad++\plugins`.
     3.  Create a new folder named `AutoDaveSave`.
     4.  Place your newly compiled `.dll` file inside this folder.
+    
+    Note: You can use the DLL in the release.    
