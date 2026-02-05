@@ -22,8 +22,6 @@ Apache License 2.0 (see [LICENSE](LICENSE))
 > * Save files at least once manually to ensure silent autosave functions correctly.
 
 ## Installation
-
-### Option 1: Secure Approach (Source Code)
 *Recommended for secure environments such as power user, government, and commercial.*
 
 * **Scan:** Analyze the provided `.cpp` file using your preferred source code scanners to verify security.
@@ -33,9 +31,3 @@ Apache License 2.0 (see [LICENSE](LICENSE))
     2.  Navigate to `C:\Program Files\Notepad++\plugins`.
     3.  Create a new folder named `AutoDaveSave`.
     4.  Place your newly compiled `.dll` file inside this folder.
-
-### Option 2: Standard Approach (Pre-built DLL)
-* Ensure Notepad++ is completely closed.
-* Navigate to `C:\Program Files\Notepad++\plugins`.
-* Create a new folder named `AutoDaveSave`.
-* Place the provided `.dll` file inside this folder.
