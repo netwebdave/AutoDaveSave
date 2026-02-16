@@ -1,7 +1,7 @@
 name: "CodeQL (C/C++)"
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
     branches: [ "master" ]
   pull_request:
@@ -13,7 +13,6 @@ permissions:
   contents: read
   actions: read
   security-events: write
-  packages: read
 
 jobs:
   analyze:
@@ -33,13 +32,10 @@ jobs:
       - name: Configure CMake (MSVC)
         run: cmake -S . -B build-temp
 
-      - name: Build (plugin only)
-        run: cmake --build build-temp --config Release --target AutoDaveSave --parallel
-
-      - name: Verify DLL Output
-        shell: pwsh
-        run: |
-          Get-ChildItem -Recurse build-temp/out -Include *.dll | Select-Object FullName
+      - name: Build DLL
+        run: cmake --build build-temp --config Release --target AutoDaveSave --parallel --clean-first
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:c-cpp"
