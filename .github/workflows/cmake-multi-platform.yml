@@ -13,20 +13,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build_type: [Release]
+        build_type: [ Release ]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Configure CMake (MSVC)
-      run: >
-        cmake -S . -B build
-        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+      - name: Configure CMake (MSVC)
+        run: cmake -S . -B build -DCMAKE_CONFIGURATION_TYPES=${{ matrix.build_type }}
 
-    - name: Build
-      run: cmake --build build --config ${{ matrix.build_type }}
+      - name: Build
+        run: cmake --build build --config ${{ matrix.build_type }} --parallel
 
-    - name: Test
-      working-directory: build
-      run: ctest -C ${{ matrix.build_type }} --output-on-failure
+      - name: Test
+        run: ctest --test-dir build -C ${{ matrix.build_type }} --output-on-failure
