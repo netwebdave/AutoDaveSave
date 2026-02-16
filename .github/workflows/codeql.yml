@@ -6,8 +6,6 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-  schedule:
-    - cron: '41 2 * * 6'
 
 permissions:
   contents: read
@@ -16,26 +14,28 @@ permissions:
 
 jobs:
   analyze:
-    name: Analyze (c-cpp)
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+      - uses: github/codeql-action/init@v4
         with:
           languages: c-cpp
           build-mode: manual
 
-      - name: Configure CMake (MSVC)
-        run: cmake -S . -B build-temp
+      - run: cmake -S . -B build-temp
 
-      - name: Build DLL
-        run: cmake --build build-temp --config Release --target AutoDaveSave --parallel --clean-first
+      - run: cmake --build build-temp --config Release --target AutoDaveSave --parallel --clean-first
 
-      - name: Perform CodeQL Analysis
+      - name: Perform CodeQL Analysis (generate SARIF)
         uses: github/codeql-action/analyze@v4
         with:
           category: "/language:c-cpp"
+          output: sarif-results
+
+      - name: Upload SARIF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeql-sarif
+          path: sarif-results/*.sarif
