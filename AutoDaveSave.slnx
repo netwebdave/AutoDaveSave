@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="AutoDaveSave.vcxproj" />
+  <Project Path="AutoDaveSave.vcxproj" Id="673d185e-c866-4331-8a5b-d8ef4a7433de" />
 </Solution>
