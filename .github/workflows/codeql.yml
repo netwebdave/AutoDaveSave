@@ -1,4 +1,4 @@
-name: "CodeQL Advanced (Manual C/C++ Build)"
+name: "CodeQL (C/C++)"
 
 on:
   push:
@@ -8,23 +8,16 @@ on:
   schedule:
     - cron: '41 2 * * 6'
 
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+  packages: read
+
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
-    runs-on: ubuntu-latest
-
-    permissions:
-      security-events: write
-      packages: read
-      actions: read
-      contents: read
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - language: c-cpp
-            build-mode: manual
+    name: Analyze (c-cpp)
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -33,29 +26,19 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages: ${{ matrix.language }}
-          build-mode: ${{ matrix.build-mode }}
+          languages: c-cpp
+          build-mode: manual
 
-      - name: Install build dependencies
-        if: matrix.build-mode == 'manual'
-        shell: bash
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake ninja-build g++ make
+      - name: Configure CMake (MSVC)
+        run: cmake -S . -B build-temp
 
-      - name: Configure
-        if: matrix.build-mode == 'manual'
-        shell: bash
-        run: |
-          cmake -S . -B build -G Ninja
+      - name: Build (plugin only)
+        run: cmake --build build-temp --config Release --target AutoDaveSave --parallel
 
-      - name: Build
-        if: matrix.build-mode == 'manual'
-        shell: bash
+      - name: Verify DLL Output
+        shell: pwsh
         run: |
-          cmake --build build --parallel
+          Get-ChildItem -Recurse build-temp/out -Include *.dll | Select-Object FullName
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
-        with:
-          category: "/language:${{ matrix.language }}"
