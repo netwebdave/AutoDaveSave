@@ -1,4 +1,4 @@
-name: "CodeQL Advanced"
+name: "CodeQL Advanced (Manual C/C++ Build)"
 
 on:
   push:
@@ -12,6 +12,7 @@ jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
+
     permissions:
       security-events: write
       packages: read
@@ -40,7 +41,7 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build g++
+          sudo apt-get install -y cmake ninja-build g++ make
 
       - name: Configure
         if: matrix.build-mode == 'manual'
@@ -52,7 +53,7 @@ jobs:
         if: matrix.build-mode == 'manual'
         shell: bash
         run: |
-          cmake --build build
+          cmake --build build --parallel
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
