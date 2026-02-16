@@ -1,27 +1,25 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(AutoDaveSavePlugin LANGUAGES CXX)
+project(AutoDaveSave LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# One DLL plugin target
-add_library(plugin SHARED
-    src/plugin.cpp
+# Build one DLL (Windows) or shared library (other platforms)
+add_library(AutoDaveSave SHARED
+    AudoDaveSave.cpp
 )
 
-target_include_directories(plugin PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-# Put outputs in build/out
-set_target_properties(plugin PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
-)
-
-# Windows convenience: exports symbols automatically
-if (WIN32)
-    set_target_properties(plugin PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+# Optional: use module definition file for exports (MSVC)
+if (MSVC AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Exports.def")
+    set_target_properties(AutoDaveSave PROPERTIES
+        LINK_FLAGS "/DEF:${CMAKE_CURRENT_SOURCE_DIR}/Exports.def"
+    )
 endif()
+
+# Put output artifacts in build temp folder under /out
+set_target_properties(AutoDaveSave PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"  # .dll
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"  # .lib import libs or non-Windows shared libs
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"  # static/import libs
+)
