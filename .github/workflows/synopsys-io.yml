@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
   workflow_dispatch: {}
 
 jobs:
@@ -23,10 +20,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Assert required secrets present
-        if: ${{ secrets.IO_SERVER_URL == '' || secrets.IO_SERVER_TOKEN == '' }}
+      - name: Fail fast if IO secrets missing
+        if: ${{ (secrets.IO_SERVER_URL == '') || (secrets.IO_SERVER_TOKEN == '') }}
         run: |
-          echo "Missing IO_SERVER_URL and/or IO_SERVER_TOKEN"
+          echo "Missing required secrets: IO_SERVER_URL and/or IO_SERVER_TOKEN"
           exit 1
 
       - name: Synopsys Intelligent Security Scan
