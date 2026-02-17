@@ -2,26 +2,19 @@ name: Synopsys Intelligent Security Scan
 
 on:
   push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
+    branches: [ "main", "develop" ]
   workflow_dispatch:
 
 jobs:
-  security-scan:
-    name: Synopsys Intelligent Security Scan
+  synopsys-io:
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
       security-events: write
       actions: read
 
     steps:
-      - name: Checkout source
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Synopsys Intelligent Security Scan
@@ -29,15 +22,4 @@ jobs:
         with:
           ioServerUrl: ${{ secrets.IO_SERVER_URL }}
           ioServerToken: ${{ secrets.IO_SERVER_TOKEN }}
-          stage: "IO"
-
-          # Optional configuration
-          blackduck_url: ${{ secrets.BLACKDUCK_URL }}
-          blackduck_token: ${{ secrets.BLACKDUCK_TOKEN }}
-          coverity_url: ${{ secrets.COVERITY_URL }}
-          coverity_token: ${{ secrets.COVERITY_TOKEN }}
-
-        env:
-          # Optional proxy support
-          HTTP_PROXY: ${{ secrets.HTTP_PROXY }}
-          HTTPS_PROXY: ${{ secrets.HTTPS_PROXY }}
+          stage: IO
