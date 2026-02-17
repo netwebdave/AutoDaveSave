@@ -10,7 +10,6 @@ jobs:
   synopsys-io:
     name: Synopsys Intelligent Security Scan (IO)
     runs-on: ubuntu-latest
-    # environment: production
 
     permissions:
       contents: read
