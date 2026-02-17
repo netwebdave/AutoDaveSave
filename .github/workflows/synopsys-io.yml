@@ -21,10 +21,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Fail fast if IO secrets missing
-        if: ${{ (secrets.IO_SERVER_URL == '') || (secrets.IO_SERVER_TOKEN == '') }}
+        shell: bash
+        env:
+          IO_SERVER_URL: ${{ secrets.IO_SERVER_URL }}
+          IO_SERVER_TOKEN: ${{ secrets.IO_SERVER_TOKEN }}
         run: |
-          echo "Missing required secrets: IO_SERVER_URL and/or IO_SERVER_TOKEN"
-          exit 1
+          if [ -z "${IO_SERVER_URL}" ] || [ -z "${IO_SERVER_TOKEN}" ]; then
+            echo "Missing required secrets: IO_SERVER_URL and/or IO_SERVER_TOKEN"
+            exit 1
+          fi
 
       - name: Synopsys Intelligent Security Scan
         uses: blackduck-inc/intelligent-security-scan@2023.3.3
