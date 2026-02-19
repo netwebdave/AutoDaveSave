@@ -32,4 +32,6 @@ Apache License 2.0 (see [LICENSE](LICENSE))
     3.  Create a new folder named `AutoDaveSave`.
     4.  Place your newly compiled `.dll` file inside this folder.
     
-    Note: You can use the DLL in the release.    
+    Note: You can use the DLL in the release.
+  
+<img width="128" height="128" alt="image" src="https://github.com/user-attachments/assets/afbccd44-5b48-4dab-915c-064df1f0b620" />
